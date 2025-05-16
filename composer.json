@@ -1,0 +1,33 @@
+{
+  "name": "groton-school/lti-registration-builder",
+  "description": "Generate an LTI 1.0 registration document",
+  "version": "0.0.0",
+  "authors": [
+    {
+      "name": "Seth Battis",
+      "email": "sbattis@groton.org"
+    }
+  ],
+  "license": "GPL-3.0",
+  "require": {
+    "ext-json": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "GrotonSchool\\LTI\\Registration\\": "src/"
+    }
+  },
+  "scripts": {
+    "release": "conventional-changelog --commit"
+  },
+  "require-dev": {
+    "franzl/studio": "^0.16.0",
+    "marcocesarato/php-conventional-changelog": "^1.17"
+  },
+  "config": {
+    "sort-packages": true,
+    "allow-plugins": {
+      "franzl/studio": true
+    }
+  }
+}
