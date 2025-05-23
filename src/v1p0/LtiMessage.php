@@ -4,16 +4,19 @@ declare(strict_types=1);
 
 namespace GrotonSchool\LTI\Registration\v1p0;
 
+use GrotonSchool\LTI\Registration\EnumeratedArrayValuesTrait;
 use GrotonSchool\LTI\Registration\PropertyCollectionTrait;
 use GrotonSchool\LTI\Registration\UniqueArrayValuesTrait;
 use GrotonSchool\LTI\Registration\ValidateUriTrait;
 use JsonSerializable;
+use Packback\Lti1p3\LtiConstants;
 
 class LtiMessage implements JsonSerializable
 {
     use PropertyCollectionTrait;
     use UniqueArrayValuesTrait;
     use ValidateUriTrait;
+    use EnumeratedArrayValuesTrait;
 
     public const TYPE = 'type';
     public const TARGET_LINK_URI = 'target_link_uri';
@@ -23,14 +26,25 @@ class LtiMessage implements JsonSerializable
     public const PLACEMENTS = 'placements';
     public const ROLES = 'roles';
 
-    public const TYPE_RESOURCE_LINK = 'LtiResourceLinkRequest';
+    public const TYPE_DEEPLINK = LtiConstants::MESSAGE_TYPE_DEEPLINK;
+    public const TYPE_DEEPLING_RESPONSE = LtiConstants::MESSAGE_TYPE_DEEPLINK_RESPONSE;
+    public const TYPE_RESOURCE = LtiConstants::MESSAGE_TYPE_RESOURCE;
+    public const TYPE_SUBMISSIONREVIEW = LtiConstants::MESSAGE_TYPE_SUBMISSIONREVIEW;
+
+    private const MESSSAGE_TYPES = [
+        self::TYPE_DEEPLINK,
+        self::TYPE_DEEPLING_RESPONSE,
+        self::TYPE_RESOURCE,
+        self::TYPE_SUBMISSIONREVIEW
+    ];
 
     /**
      * The message type
      */
-    protected string $type = self::TYPE_RESOURCE_LINK;
+    protected ?string $type = null;
     public function setType(string $type)
     {
+        $this->validateEnumeratedValues($type, self::MESSSAGE_TYPES);
         $this->type = $type;
         return $this;
     }
